@@ -41,6 +41,7 @@ NLTK의 기능을 제대로 사용하려면 NLTK Data라는 데이터들을 추�
 
 한국어 자연어 처리를 위한 형태소 분석기 패키지이다.
 
+
 ##1-4 Pandas & Numpy & Matplotlib
 
 1. Pandas
@@ -53,7 +54,7 @@ import pandas as pd
 ```
 
 - Series
-1차원 배열의 값에 각각 대응되는 인덱스를 부여하는 구조
+1차원 배열의 값에 각각 대응되는 인덱스를 부여하는 구조이다.
 ```python
 sr = pd.Series(['hello','python','world','!'], index=['h','p','w','m'])
 
@@ -67,6 +68,49 @@ w     world
 m         !
 dtype: object
 ```
+시리즈는 List, Tuple, Dict로 생성할 수 있다.
 
 - DataFrame
-- Panel
+2차원 리스트를 매개변수로 가진다.
+행방향 인덱스와 열방향 인덱스가 존재한다.
+```python
+values = [[1,2,3],[4,5,6],[7,8,9]]
+index = ['A','B','C']
+columns = ['x','y','z']
+
+df = pd.DataFrame(values, index=index, columns=columns)
+
+print(df)
+```
+출력값
+```
+   x  y  z
+A  1  2  3
+B  4  5  6
+C  7  8  9
+```
+데이터프레임은 List, Series, Dict, ndarrays 등으로 생성할 수 있다.
+
+데이터프레임 조회 명령어
+ - df.head(n) : 앞 부분을 n개 보기
+ - df.tail(n) : 뒷 부분을 n개 보기
+ - df['열이름']: 해당 열만 보기
+
+
+- Panel(not in book - investigate)
+현재는 삭제된 기능으로 3차원 데이터를 다루기위한 구조이다.
+items, major_axis, minor_axis 이렇게 3개의 축으로 설계된다.
+
+사라진 이유: 3차원 데이터의 수요 부족과 더 나은 대체 수단이 존재한다.
+
+대체제: MultiIndex DataFrame, xarray
+
+- 외부 데이터 읽기
+pd.read_[파일 타입]('파일 명') 형태로 읽을 수 있다.
+```python
+#ex)
+pd.read_csv('example.csv')
+pd.read_json('example.json')
+```
+
+2. Numpy
