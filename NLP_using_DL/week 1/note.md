@@ -52,7 +52,7 @@ NLTK의 기능을 제대로 사용하려면 NLTK Data라는 데이터들을 추�
 import pandas as pd
 ```
 
-- Series
+- Series<br>
 1차원 배열의 값에 각각 대응되는 인덱스를 부여하는 구조이다.
 ```python
 sr = pd.Series(['hello','python','world','!'], index=['h','p','w','m'])
@@ -69,7 +69,7 @@ dtype: object
 ```
 시리즈는 List, Tuple, Dict로 생성할 수 있다.
 
-- DataFrame
+- DataFrame<br>
 2차원 리스트를 매개변수로 가진다.
 행방향 인덱스와 열방향 인덱스가 존재한다.
 ```python
@@ -93,10 +93,10 @@ C  7  8  9
 데이터프레임 조회 명령어
  - df.head(n) : 앞 부분을 n개 보기
  - df.tail(n) : 뒷 부분을 n개 보기
- - df['열이름']: 해당 열만 보기
+ - df['열이름']: 해당 열만 보기<br><br>
 
 
-- Panel(not in book - investigate)
+- Panel(not in book - investigate)<br>
 현재는 삭제된 기능으로 3차원 데이터를 다루기위한 구조이다.
 items, major_axis, minor_axis 이렇게 3개의 축으로 설계된다.
 
@@ -123,3 +123,4 @@ ndarray는 n개의 dimension을 가지는 array라는 의미로 다중 차원 �
 import numpy as np
 ```
 
+1) 
