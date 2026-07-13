@@ -1,10 +1,9 @@
-#WEEK 1 STUDY (2026.7.11-????)
+# WEEK 1 STUDY (2026.7.11-????)
 
-##1-1 pakage
+## 1-1 pakage
 pass
 
-##1-2 framework & library
-
+## 1-2 framework & library
 1. Tensorflow
 
 머신러닝과 딥 러닝을 직관적으로 설계하게끔 도와준다.
@@ -30,7 +29,7 @@ import tensorflow as tf
 다양한 머신 러닝 모듈 또는 자체 데이터를 제공한다.
 
 
-##1-3 NLTK & KoNLPy
+## 1-3 NLTK & KoNLPy
 
 1. NLTK
 
@@ -42,7 +41,7 @@ NLTK의 기능을 제대로 사용하려면 NLTK Data라는 데이터들을 추�
 한국어 자연어 처리를 위한 형태소 분석기 패키지이다.
 
 
-##1-4 Pandas & Numpy & Matplotlib
+## 1-4 Pandas & Numpy & Matplotlib
 
 1. Pandas
 
@@ -114,3 +113,13 @@ pd.read_json('example.json')
 ```
 
 2. Numpy
+
+수치 데이터를 다루는 패키지이다.
+Numpy는 ndarray라고 불리는 행렬구조를 가지고있으며 벡터, 행렬 등의 여러 연산에서 사용된다.
+ndarray는 n개의 dimension을 가지는 array라는 의미로 다중 차원 행렬을 보다 쉽게 계산할수있다는 장점이 있다.
+
+관례 : np로 import하는 것이 관례
+```python
+import numpy as np
+```
+
