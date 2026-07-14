@@ -1,4 +1,4 @@
-# WEEK 1 STUDY (2026.7.11-????)
+# WEEK 1 STUDY (2026.7.11-2026.7.14)
 
 ## 1-1 pakage
 pass
