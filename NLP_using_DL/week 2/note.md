@@ -30,7 +30,7 @@ We're이나 I'm과 같은 clitic이 존재하는 형태나 New York와 같이 �
 ### 4. 문장 토큰화
 token의 단위가 sentence일때 이를 구분하는 작업을 문장 분류라고한다.
 이때 마침표(.), 물음표(?), 느낌표(!)를 기준으로 자른다면 마침표가 구분자 역할을 수행하지않을 가능성이 있기때문에 조심해야한다.
-[실습 예제](./2-1.ipynb#2-14-Sentence-Tokenization)
+[실습 예제](./2-1.ipynb#2-14-sentence-tokenization)
 
 ### 5. 한국어 토큰화의 어려움
 영어는 몇몇 합성어나 줄임말의 예외처리만 하면 띄어쓰기를 기준으로 단어 토큰화를 수행해도 문제가 생기지않는다.
@@ -59,7 +59,7 @@ token의 단위가 sentence일때 이를 구분하는 작업을 문장 분류라
 예를 들어 명사로서의 '못'과 부사로서의 '못'은 뒤의 동사에따라서 의미가 달라질수있어 품사 구분을 하고, 이 과정을 품사 태깅이라한다.
 
 ### 7. NLTK와 KoNLPy를 이용한 토큰화
-[실습 예제](./2-1.ipynb#2-17-Tokenization-practice)
+[실습 예제](./2-1.ipynb#2-17-tokenization-practice)
 
 
 ## 2-2 Cleaning & Normalization
