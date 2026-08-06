@@ -1,4 +1,4 @@
-# WEEK 2 STUDY (2026.7.14-????)
+# WEEK 2 STUDY (2026.7.14-2026.8.3)
 
 ## 2-1 Tokenization
 corpus data를 token이라는 단위로 나누는 작업이다.  
