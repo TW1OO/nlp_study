@@ -52,3 +52,38 @@ $$P(W) = P(w_1, w_2, w_3, w_4, w_5, \ldots, w_n) = \prod_{i=1}^{n}P(w_{i} \mid w
 
 ### 4. 언어 모델의 간단한 직관
 사람은 '비행기를 타려고 공항에 갔는데 지각을 하는 바람에 비행기를 [?]'라는 문장이 있을때 '비행기를' 다음에 '놓쳤다'라는 단어가 나올 것이라고 예상할 수 있다.
+
+
+## 3-2 Statistical Language Model
+
+### 1. 조건부 확률
+조건부 확률 관계  
+  
+$$P(B|A) = P(A,B) / P(A)$$
+$$P(A,B) = P(A)P(B|A)$$
+  
+조건부 확률의 연쇄 법칙  
+  
+$$P(A,B,C,D) = P(A)P(B|A)P(C|A,B)P(D|A,B,C)$$
+  
+n개 확률의 연쇄 법칙  
+$$P(x_1, x_2, x_3 ... x_n) = P(x_1)P(x_2|x_1)P(x_3|x_1,x_2)...P(x_n|x_1 ... x_{n-1})$$
+
+### 2. 문장에 대한 확률
+예시 문장 'An adorabble little boy is spreading smiles'를 식으로 표현하면 $$P(An adorabble little boy is spreading smiles)$$로 표현할 수 있다.  
+  
+각 단어는 문맥이라는 관계로 인해 이전 단어의 영향을 받아 나온다. 그리고 이러한 모든 단어들로 하나의 문장이 완성된다.  
+그렇기때문에 문장의 확률을 구할때 조건부 확률을 사용할 수 있다.  
+$$P(w_1, w_2, w_3, w_4, w_5, ... w_n) = \prod_{n=1}^{n}P(w_{n} | w_{1}, ... , w_{n-1})$$
+  
+위 수식을 적용하면 다음과 같다.
+$$P(\text{An adorable little boy is spreading smiles}) = P(\text{An})  ×  P(\text{adorable|An})  ×  P(\text{little|An adorable})  ×  P(\text{boy|An adorable little})  ×  P(\text{is|An adorable little boy})$$
+
+### 3. 카운트 기반의 접근
+SLM은 이전 단어로부터 다음 단어의 확률을 구할때 카운트에 기반하여 확률을 계산한다.  
+$$P(\text{is|An adorable little boy}) = \frac{\text{count(An adorable little boy is)}}{\text{count(An adorable little boy )}}$$
+그 확률은 위와 같다.  
+만약 학습한 코퍼스 데이터에서 An adorable little boy가 100번 등장했을때 그 다음에 is가 등장한 경우는 30번이라고 하면
+$P(\text{is|An adorable little boy})$는 30%이다
+  
+### 4. 희소 문제(카운트 기반 접근의 한계)
