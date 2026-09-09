@@ -87,3 +87,21 @@ $$P(\text{is|An adorable little boy}) = \frac{\text{count(An adorable little boy
 $P(\text{is|An adorable little boy})$는 30%이다
   
 ### 4. 희소 문제(카운트 기반 접근의 한계)
+$$P\text{(is|An adorable little boy}) = \frac{\text{count(An adorable little boy is})}{\text{count(An adorable little boy })}$$
+위와 같이 $P\text{(is|An adorable little boy})$를 구하는 경우에 기계가 훈련한 코퍼스에 An adorable little boy is라는 단어 시퀀스가 없다면 이 단어 시퀀스의 확률은 0이 된다.  
+또는 An adorable little boy라는 단어 시퀀스가 없다면 분모가 0이 되어 확률은 정의되지않는다.  
+이와 같이 충분한 데이터를 관측하지 못해 언어를 정확히 모델링하지 못하는 문제를 희소 문제(sparsity problem)라 한다.  
+위 문제를 완화하기위해 n-gram 언어 모델과같은 여러 generalization 기법들이 존재하지만 희소 문제의 근본적인 해결책이 되지못하였다.  
+  
+## 3-3 N-gram Language Model
+n-gram 언어 모델이란 모든 단어를 고려하는 것이 아니라 일부 단어만 고려하는 접근 방법을 사용하는 모델이다. 이때 일부 단어의 개수를 결정하는데 이것이 n의 의미이다.  
+  
+### 1. 코퍼스에서 카운트하지 못하는 경우의 감소
+SLM은 훈련 코퍼스에 확률을 계산하고자하는 문장이나 단어가 없을 수 있다는 한계를 가진다. 그리고 문장이 길어질수록 존재하지않을 가능성은 더 높아진다. 즉, 카운트하지 못할 가능성이 높다. 그러나 참고하는 단어를 줄이면 카운트할 가능성을 높일 수 있다.  
+$$P(\text{is|An adorable little boy}) \approx\ P(\text{is|boy})$$
+$$P(\text{is|An adorable little boy}) \approx\ P(\text{is|little boy})$$
+An adorable little boy가 나왔을 때 is가 나올 확률을 그냥 boy가 나왔을 때 is가 나올 확률로 생각해보면 boy is라는 단어 시퀀스가 존재할 가능성이 더 높을 것이다. 혹은 little boy가 나왔을 때 is가 나올 확률로 생각하는 것도 가능할 것이다.  
+  
+즉, 원래는 'An adorable little boy'가 나왔을 때 'is'가 나올 확률을 구하기 위해서는 'An adorable little boy'가 나온 횟수와 'An adorable little boy is'가 나온 횟수를 카운트해야했지만, 위 방식을 사용하면 단어의 확률을 구하기위해 기준 단어의 앞을 전부 카운트할 필요없이, 앞 단어 중 임의의 개수만 포함해서 근사치를 구하게된다.  
+  
+### 2. N-gram
