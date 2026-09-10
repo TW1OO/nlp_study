@@ -105,3 +105,43 @@ An adorable little boy가 나왔을 때 is가 나올 확률을 그냥 boy가 나
 즉, 원래는 'An adorable little boy'가 나왔을 때 'is'가 나올 확률을 구하기 위해서는 'An adorable little boy'가 나온 횟수와 'An adorable little boy is'가 나온 횟수를 카운트해야했지만, 위 방식을 사용하면 단어의 확률을 구하기위해 기준 단어의 앞을 전부 카운트할 필요없이, 앞 단어 중 임의의 개수만 포함해서 근사치를 구하게된다.  
   
 ### 2. N-gram
+앞 단어에서 임의의 개수를 정하는 기준을 위해 n-gram을 사용한다.  
+n-gram은 n개의 연속적인 나열을 의미하며 가지고 있는 코퍼스에서 n개의 단어 뭉치 단위로 끊어서 이를 하나의 토큰으로 간주한다. 위에서 사용한 'An adorable little boy is spreading smiles'를 예시로 n-gram을 구해보면 아래와 같다.  
+
+**uni**grams : an, adorable, little, boy, spreading, smiles  
+**bi**grams : an adorable, adorable little, little boy, boy is, is spreading, spreading smiles  
+**tri**grams : an adorable little, adorable little boy, little boy is, boy is spreading, is spreading smiles  
+**4**-grams : an adorable little boy, adorable little boy is, little boy is spreading, boy is spreading smiles  
+
+n-gram을 사용할 때 n이 1일 때는 uni, 2일 때는 bi, 3일 때는 tri라고 명하며 4이상은 n-gram으로 이용한다. 때로는 1-gram, 2-gram과같이 사용하기도 한다.  
+n-gram을 통한 언어 모델에서는 다음에 나올 단어의 예측에 n-1개의 단어를 사용한다. 예를 들어 'An adorable little boy is spreading'의 뒤에 올 단어를 예측할 때, 4-gram 모델을 사용한다고 가정한다. 이때, n-1개의 단어를 사용하기에 3개의 단어만을 고려한다.  
+$$P(w\text{|boy is spreading}) = \frac{\text{count(boy is spreading}\ w)}{\text{count(boy is spreading)}}$$
+만약 가지고있는 코퍼스에서 'boy is spreading'이 1000번 등장하였고, 'boy is spreading insults'가 500번, 'boy is spreading smiles'가 200번 등장했다고 가정하자. 그러면 'boy is spreading' 다음에 insults가 등장할 확률은 50%이며, smiles가 등장할 확률은 20%가 된다. 즉 insults가 더 맞다고 판단하게 된다.
+$$P(\text{insults|boy is spreading}) = 0.500$$
+$$P(\text{smiles|boy is spreading}) = 0.200$$
+
+### 3. N-gram Language Model의 한계
+앞선 4-gram을 이용한 언어 모델의 동작방식을 보면 문장 앞의 'an adorable little'이라는 수식어를 반영하지않았다. 그런데 '작고 사랑스러운 소년'이 하는 행동을 예측하는 언어 모델이었다면 '모욕을 퍼트렸다'라는 부정적 내용이 '웃음 지었다'라는 긍정적인 내용을 대신해서 선택되었을까?  
+즉, n-gram은 앞의 단어 n-1개만 보기때문에 의도대로 문장 끝맺음을 짓지못하는 문제가 생긴다. 이는 전체 문장을 고려한 언어 모델보다 **정확도**가 떨어지는 문제점과 한계를 가진다. 아래에서 이 한계점을 정리한다.  
+
+- 희소 문제(Sparsity Problem)  
+
+앞의 모든 단어를 보는 것보다는 일부 단어만 보는 것이 현실적으로 카운트 확률을 높일 수 있지만, n-gram 언어 모델도 여전히 희소 문제를 가진다.
+
+- n을 선택하는 것의 trade-off 문제  
+
+앞에서 볼 단어의 개수 n을 정하는 것은 trade-off(상충 관계) 문제를 가진다.  
+n을 크게 정하면 실제 코퍼스에서 해당 n-gram을 카운트할 확률이 적어지므로 희소 문제는 더 심해진다. 또한 모델 사이즈도 함께 커지는 문제를 가진다. 왜냐하면 기본적으로 코퍼스의 모든 n-gram에대해 카운트 해야하기때문이다.  
+반대로 n을 작게 정하면 훈련 코퍼스에서 카운트는 잘 되겠지만 정확도는 현실의 확률분포와 멀어진다. 그렇기때문에 적절한 n을 선택해야한다. 앞서 언급한 trade-off 문제로인해 정확도를 높이려면 n은 최대 5를 넘기면 안된다라고 **권장**하고있다.  
+
+n이 성능에 영향을 주는 것을 확인할 수 있는 유명한 예제를 하나 보자. 스탠퍼드 대학교의 공유 자료에 따르면, WSJ에서 3800만 개의 단어 토큰에대해 n-gram 언어 모델을 학습하고, 1500만개의 테스트 데이터에대해 테스트를 했을 때 아래와 같은 성능이 나왔다고한다.(아래 성능은 수치가 낮을수록 더 좋은 성능을 뜻한다.)  
+|  | Unigram | Bigram | Trigram |
+| --- | --- | --- | --- |
+| Perplexity | 962 | 170 | 109 |
+
+### 4. Domain에 맞는 코퍼스의 수집
+어떤 상황이냐에따라 특정 단어들의 확률 분포는 당연히 다르다. 예를들어, 마케팅 분야에서는 마케팅 단어가 빈번할 것이고, 의료 분야에서는 의료 단어가 빈번할 것이다. 이 경우에 언어 모델에 사용하는 코퍼스를 해당 domain의 코퍼스를 사용하면 언어 모델이 제대로 된 언어 생성을 할 가능성이 높아진다.  
+때로는 이를 언어 모델의 약점이라고 하기도하는데, 훈련에 사용된 코퍼스가 무엇이냐에 따라서 성능이 달라지기때문이다.
+
+### 5. 인공 신경망을 이용한 언어 모델
+n-gram language model의 한계점을 극복하기위해 분모, 분자에 숫자를 더해서 카운트가 0이 되는 것을 방지하는 등의 여러 generalization들이 존재한다. 하지만 본질적인 n-gram 모델의 취약점을 완전히 해결하지 못하였고, 이를 위한 대안으로 n-gram language model보다 대체적으로 성능이 우수한 인공 신경망을 이용한 언어 모델이 많이 사용되고있다.
